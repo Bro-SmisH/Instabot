@@ -1,98 +1,60 @@
-# This Python file uses the following encoding: utf-8
-
-from setuptools import setup
+from codecs import open
 from os import path
 
-# io.open is needed for projects that support Python 2.7
-# It ensures open() defaults to text mode with universal newlines,
-# and accepts an argument to specify the text encoding
-# Python 3 only projects can skip this import and use built-in open()
-from io import open as io_open
-import re
+from setuptools import find_packages, setup
 
-
-summary = "Tool for automated Instagram interactions"
-project_homepage = "https://github.com/InstaPy/InstaPy"
 here = path.abspath(path.dirname(__file__))
 
-
-def readall(*args):
-    with io_open(path.join(here, *args), encoding="utf-8") as fp:
-        return fp.read()
-
-
-with open("requirements.txt") as f:
-    dependencies = f.read().splitlines()
-
-documentation = readall("README.md")
-metadata = dict(
-    re.findall(r"""__([a-z]+)__ = "([^"]+)""", readall("instapy", "__init__.py"))
-)
+# Get the long description from the README file
+with open(path.join(here, "README.md"), encoding="utf-8") as f:
+    long_description = f.read()
 
 setup(
-    name="instapy",
-    version=metadata["version"],
-    description=summary,
-    long_description=documentation,
-    long_description_content_type="text/markdown",
-    author="Tim Großmann",
-    author_email="contact.timgrossmann@gmail.com",
-    maintainer="InstaPy Community at Github",
-    license="GPLv3",
-    url=project_homepage,
-    download_url=(project_homepage + "/archive/master.zip"),
-    project_urls={
-        "How Tos": (project_homepage + "/tree/master/docs"),
-        "Examples": (project_homepage + "/tree/master/quickstart_templates"),
-        "Bug Reports": (project_homepage + "/issues"),
-        "Funding": "https://www.paypal.me/supportInstaPy",
-        "Say Thanks!": "http://saythanks.io/to/uluQulu",
-        "Source": (project_homepage + "/tree/master/instapy"),
-    },
-    packages=["instapy"],
-    # include_package_data=True,  # <- packs every data file in the package
-    package_data={  # we need only the files below:
-        "instapy": [
-            "icons/Windows/*.ico",
-            "icons/Linux/*.png",
-            "icons/Mac/*.icns",
-            "firefox_extension/*",
-            "plugins/*",
-        ]
-    },
-    keywords=(
-        "instapy python instagram automation \
-         marketing promotion bot selenium"
-    ),
+    name="instabot",
+    version="0.117.0",
+    description="Instagram bot scripts for promotion and API python wrapper.",
+    long_description=long_description,
+    author="Daniil Okhlopkov, Evgeny Kemerov",
+    author_email="danokhlopkov@gmail.com, eskemerov@gmail.com",
+    license="Apache Software License 2.0",
+    url="https://github.com/instagrambot/instabot",
+    keywords=["instagram", "bot", "api", "wrapper"],
+    install_requires=[
+        "certifi>=2019.11.28",
+        "chardet>=3.0.4",
+        "future>=0.18.2",
+        "huepy>=1.2.1",
+        "idna>=2.8",
+        "pysocks>=1.7.1",
+        "pytz>=2019.3",
+        "requests>=2.22.0",
+        "requests-toolbelt>=0.9.1",
+        "responses>=0.10.9",
+        "schedule>=0.6.0",
+        "six>=1.14.0",
+        "tqdm>=4.41.1",
+        "urllib3>=1.25.7",
+        "mock>=3.0.5",
+        "moviepy>=1.0.1",
+        "Pillow>=6.2.2",
+        "pytest>=4.6.9",
+        "pycryptodome>=3.9.7",
+    ],
     classifiers=[
-        "Development Status :: 4 - Beta",
-        "Environment :: Console",
-        "Environment :: Win32 (MS Windows)",
-        "Environment :: MacOS X",
-        "Environment :: Web Environment",
-        "Intended Audience :: End Users/Desktop",
-        "Intended Audience :: Developers",
-        "Operating System :: Microsoft :: Windows",
-        "Operating System :: POSIX :: Linux",
-        "Operating System :: MacOS :: MacOS X",
-        "Operating System :: Unix",
-        "Programming Language :: Python",
-        "Programming Language :: JavaScript",
-        "Programming Language :: SQL",
-        "Topic :: Utilities",
-        "Topic :: Software Development :: Build Tools",
+        # How mature is this project? Common values are
+        "Development Status :: 5 - Production/Stable",
+        # Indicate who your project is intended for
+        "Intended Audience :: Information Technology",
+        # Pick your license as you wish (should match "license" above)
+        "License :: OSI Approved :: Apache Software License",
+        # Specify the Python versions you support here. In particular, ensure
+        # that you indicate whether you support Python 2, Python 3 or both.
+        "Programming Language :: Python :: 2",
+        "Programming Language :: Python :: 2.7",
         "Programming Language :: Python :: 3",
         "Programming Language :: Python :: 3.5",
         "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3.7",
-        "Programming Language :: Python :: 3.8",
-        "Programming Language :: Python :: 3.9",
-        "Natural Language :: English",
     ],
-    install_requires=dependencies,
-    extras_require={"test": ["tox", "virtualenv", "tox-venv"]},
-    python_requires=">=3.5",
-    platforms=["win32", "linux", "linux2", "darwin"],
-    zip_safe=False,
-    entry_points={"console_scripts": []},
+    packages=find_packages(),
 )
